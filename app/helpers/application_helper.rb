@@ -1,15 +1,15 @@
 module ApplicationHelper
-    require "redscarpet"
+    require "redcarpet"
     require "coderay"
 
-    class HTMLwithCordray < Rescarpet::Render::HTML
+    class HTMLwithCoderay < Redcarpet::Render::HTML
         def block_code(code, language)
             language = language.split(':')[0] if language.present?
 
             case language.to_s
             when 'rb'
                 lang = :ruby
-            when 'yaml'
+            when 'yml'
                 lang = :yaml
             when 'css'
                 lang = :css
@@ -27,15 +27,16 @@ module ApplicationHelper
 
     def markdown(text)
         html_render = HTMLwithCoderay.new(
-            filter_html: true,
-            hard_wrap: true,
-            link_attributes: { rel: 'nofollow', target "_blank"}
+          filter_html: true,
+          hard_wrap: true,
+          link_attributes: { rel: 'nofollow', target: "_blank" }
         )
         options = {
-            autolink: ture,
+            autolink: true,
             space_after_headers: true,
             no_intra_emphasis: true,
-            fance_code_blocks: true,
+            fenced_code_blocks: true,
+            tables: true,
             hard_wrap: true,
             xhtml: true,
             lax_html_blocks: true,
